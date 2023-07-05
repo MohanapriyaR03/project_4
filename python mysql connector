@@ -1,0 +1,51 @@
+------mysql file-----------------
+create database s;
+use s;
+create table questions(id int auto_increment, question varchar (255), option1 varchar(255), option2 varchar(255), option3 varchar(255), option4 varchar(255), answer int,primary key(id));
+insert into questions values (1,"What is the maximum length of a Python identifier?" , "32" ,"16" ,"128", "No fixed length is available", 4),(2,"What will be the output of the following code snippet? print(2**3 + (5 + 6)**(1 + 1))" ,"124" ,"32" ,"16" , "129" , 4),(3,"How is a code block indicated in Python?" , "intentation" , "key" , "Brakcets" ,"None of the above", 1), (4,"Which of the following concepts is not a part of Python?" , "pointer" , "looping" , "intentation" , "key" ,1), (5,"Which of the following concepts is not a part of Python?" , "while" , "for" , "do-while", "none of the above" , 3);
+------python mysql connector-------
+import mysql.connector
+mydb=mysql.connector.connect(
+  host="localhost",
+  user="root",
+  password="root",
+  database="s"
+  )
+mycursor=mydb.cursor()
+def display_questions():
+    a="select *from questions"
+    mycursor.execute(a)
+    question_1=mycursor.fetchall()
+    for question in question_1:
+        print("Question:",question[1])
+        print("Option:")
+        print("1.", question[2])
+        print("2.", question[3])
+        print("3.", question[4])
+        print("4.", question[5])
+
+def take_quiz():
+    score=0
+    a="select *from questions"
+    mycursor.execute(a)
+    question_1=mycursor.fetchall()
+    for question in question_1:
+        print("Question:",question[1])
+        print("Option:")
+        print("1.", question[2])
+        print("2.", question[3])
+        print("3.", question[4])
+        print("4.", question[5])
+        print("Enter the option (1-4):",)
+        print()
+        user_answer=int(input())
+        if user_answer==question[6]:
+            score+=1
+    print("Quiz completed! your score is :",score)
+print("Welcome to the quiz competition!")
+print("Here are the questions")
+print()
+display_questions()
+take_quiz()
+
+
